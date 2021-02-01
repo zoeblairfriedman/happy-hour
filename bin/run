@@ -3,4 +3,6 @@
 #pass relative path to the environment into require_relative path
 require_relative("../config/environment")
 
+
 Cli.new.welcome
+

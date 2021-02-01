@@ -8,4 +8,5 @@ git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
 # color gem? 
 gem 'pry'
 gem 'httparty'
+gem 'awesome_print'
 #any gems you add also need to be required by your environment
