@@ -12,9 +12,7 @@ class Api
 end
 
 
-#HERE IS HOW YOU GET 5 bars within 500 meters of a zipcode BARS—                                       
-# bars_url = "https://api.yelp.com/v3/businesses/search?term=bars&location=10001&radius=500&limit=5"
-#inside i need to add check["businesses"]
+
     #for each business I need an ID and a name and a url and phone number and price <-maybe make a class of bar??? 
     #then the user needs to chose a business
         #then I need to go to the url of the bar and scrape it for mentions of happy hour and the paragraph around it
