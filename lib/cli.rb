@@ -15,8 +15,9 @@ class Cli
     def prompt_for_location
         #would love random prompts so they change
         puts "Where are we drinking, ladies?"
-        input = gets.chomp
+        # input = gets.chomp
         #do the next step
+        Api.get_bars
     end
 
 end
