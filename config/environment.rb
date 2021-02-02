@@ -1,6 +1,7 @@
 #best practice is an absolute path for gems (shorthand):
 require 'pry'
 require 'httparty'
+require "open-uri"
 
 
 #take a relative path for these things:

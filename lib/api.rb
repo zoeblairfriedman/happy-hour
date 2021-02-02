@@ -17,6 +17,7 @@ class Api
             bars = HTTParty.get(bars_url, headers: {"Authorization" => auth})["businesses"]
             self.create_bar_hash(bars)
             else
+                #move this to the CLI
                 abort("Sorry, no bars within walking distance! Get a car or maybe move?")
             end
         end
