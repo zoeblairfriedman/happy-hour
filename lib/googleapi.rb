@@ -3,19 +3,19 @@ require 'pry'
 require_relative ("../lib/bar")
 
 class GoogleApi 
-    attr_accessor :zipcode
+
 
     API = "AIzaSyAaSwC5MoX0vLziJApwVjWZYHxmsdz077Y"
 
 
-    # def initialize(zipcode)
-    #     @zipcode = zipcode
-    #     #convert zipinto lat/long
-    #     self.make_request
-    # end
-
-    def self.make_request(zipcode)
-        close_bars_url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=40.75080,-73.99612&radius=500&types=bar&keyword=happyhour&key=#{API}"
+    def self.make_request(input)
+        result = Geocoder.search(input)
+        #convert to 5 decimal points
+        lat = result[0].data["lat"]
+        lon = result[0].data["lon"]
+        round_lat = lat.to_f.round(5).to_s
+        round_lon = lon.to_f.round(5).to_s
+        close_bars_url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=#{round_lat},#{round_lon}&radius=500&types=bar&keyword=happyhour&key=#{API}"
         bars = HTTParty.get(close_bars_url)["results"]
         self.create_bar_hash_from_search(bars)
     end

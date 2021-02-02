@@ -2,6 +2,8 @@
 require 'pry'
 require 'httparty'
 require "open-uri"
+require 'awesome_print'
+require 'geocoder'
 
 
 #take a relative path for these things:

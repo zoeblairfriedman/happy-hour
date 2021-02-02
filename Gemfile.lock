@@ -3,6 +3,7 @@ GEM
   specs:
     awesome_print (1.8.0)
     coderay (1.1.3)
+    geocoder (1.6.4)
     httparty (0.18.1)
       mime-types (~> 3.0)
       multi_xml (>= 0.5.2)
@@ -11,20 +12,17 @@ GEM
       mime-types-data (~> 3.2015)
     mime-types-data (3.2020.1104)
     multi_xml (0.6.0)
-    nokogiri (1.11.1-x86_64-darwin)
-      racc (~> 1.4)
     pry (0.13.1)
       coderay (~> 1.1)
       method_source (~> 1.0)
-    racc (1.5.2)
 
 PLATFORMS
   x86_64-darwin-19
 
 DEPENDENCIES
   awesome_print
+  geocoder
   httparty
-  nokogiri
   pry
 
 BUNDLED WITH
