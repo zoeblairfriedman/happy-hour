@@ -21,22 +21,22 @@ class Cli
         puts "4. #{Bar.all[3].name}"
         puts "5. #{Bar.all[4].name}"
 
-        # input = gets.chomp
+        input = gets.chomp
 
-        # if input == "1"
-        #     Scraper.new(Bar.all[0].url)
-        # elsif input == "2"
-        #     # Scraper.new(Bar.all[1].url)
-        # elsif input == "3"
-        #     # Scraper.new(Bar.all[2].url)
-        # elsif input == "4"
-        #     # Scraper.new(Bar.all[3].url)
-        # elsif input == "5"
-        #     # Scraper.new(Bar.all[4].url)
-        # else
-        #     puts "Please enter a number, 1-5 and we'll try this again..."
-        #     prompt_for_bar_selection
-        # end
+        if input == "1"
+            Scraper.new(Bar.all[0].url)
+        elsif input == "2"
+            # Scraper.new(Bar.all[1].url)
+        elsif input == "3"
+            # Scraper.new(Bar.all[2].url)
+        elsif input == "4"
+            # Scraper.new(Bar.all[3].url)
+        elsif input == "5"
+            # Scraper.new(Bar.all[4].url)
+        else
+            puts "Please enter a number, 1-5 and we'll try this again..."
+            prompt_for_bar_selection
+        end
     end
 
 end
