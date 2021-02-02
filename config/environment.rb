@@ -4,7 +4,7 @@ require 'httparty'
 
 
 #take a relative path for these things:
-require_relative("../lib/cli")
+require_relative ("../lib/cli")
 require_relative ("../lib/api")
-require_relative("../lib/bar")
+require_relative ("../lib/bar")
 # require other classes here as well
