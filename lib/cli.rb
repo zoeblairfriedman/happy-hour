@@ -9,21 +9,23 @@ class Cli
         #would love random prompts so they change
         puts "Where are we drinking?"
         input = gets.chomp
-        Api.get_bars(input)
+        GoogleApi.make_request(input)
         prompt_for_bar_selection
     end
 
     def prompt_for_bar_selection
         puts "Any of these sound good? Please enter a number:"
-        puts "1. #{Bar.all[0].name} #{Bar.all[0].price}"
-        puts "2. #{Bar.all[1].name}"
-        puts "3. #{Bar.all[2].name}"
-        puts "4. #{Bar.all[3].name}"
-        puts "5. #{Bar.all[4].name}"
-
-        input = gets.chomp
-
-    
+        Bar.all.each_with_index do |bar, i|
+            puts "#{i+1} #{bar.name}"
+        end
+        input = gets.chomp.to_i
+        bar = Bar.all[input-1]
+        puts "Here are all the reviews for #{bar.name} that mention the happy hour: "
+        GoogleApi.check_for_reviews(bar).each do |review|
+            puts review
+        end
+        puts "Here's the phone number if you want to follow up on prices and times: #{bar.phone}"
     end
+
 
 end
