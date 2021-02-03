@@ -2,7 +2,11 @@ class Cli
   
     def welcome
         puts "\n"
-        puts "IT'S HAPPY HOUR SOMEWHERE!".colorize(:light_magenta)
+        puts "***********************************************".colorize(:light_magenta)
+        puts "*****                                     *****".colorize(:light_magenta)
+        puts "*****      IT'S HAPPY HOUR SOMEWHERE!!    *****".colorize(:light_magenta)
+        puts "*****                                     *****".colorize(:light_magenta)
+        puts "***********************************************".colorize(:light_magenta)
         puts "\n"
         self.prompt_for_location
     end
@@ -22,21 +26,13 @@ class Cli
             puts "\n"
             puts "Any of these sound good?".colorize(:light_magenta)
             puts "\n"
-            Bar.all.each_with_index { |bar, i| puts "#{i+1} #{bar.name}, #{bar.address.colorize(:blue)}, #{bar.price.colorize(:green)}" }
+            Bar.all.each_with_index { |bar, i| puts "#{i+1} #{bar.name}, #{bar.address.colorize(:blue)} #{bar.price.colorize(:green)}" }
             puts "\n"
             puts "Please enter a number:"
             input = gets.chomp.to_i
             bar = Bar.all[input-1]
-            #move this to its own method
-            if GoogleApi.load_reviews(bar).length != 0
-                get_reviews(bar)
-            else
-                puts "Sorry! No happy Hour mentions in their reviews, but that doesn't mean they don't have one.".colorize(:light_magenta)
-                if bar.phone != nil
-                    puts "Here's the phone number to call and check: #{bar.phone}"
-                    puts "/n"
-                end
-                check_again?
+            get_reviews(bar)
+            check_again?
             end
         end
     end
@@ -48,14 +44,19 @@ class Cli
     end
 
     def get_reviews(bar)
-        puts "\n"
-        puts "Here are all the reviews for #{bar.name} that mention the happy hour: ".colorize(:light_magenta)
-        puts "\n"
-        GoogleApi.load_reviews(bar).each {|review| puts review.colorize(:light_blue) }
-        puts "\n"
-        puts "Here's the phone number if you want to follow up on prices and times: #{bar.phone}".colorize(:light_magenta)
-        puts "\n"
-        check_again?
+        if GoogleApi.load_reviews(bar).length != 0
+            puts "\n"
+            puts "Here are all the reviews for #{bar.name} that mention the happy hour: ".colorize(:light_magenta)
+            GoogleApi.load_reviews(bar).each {|review| print review.colorize(:light_blue) }
+            puts "\n"
+            puts "Here's the phone number if you want to follow up on prices and times: #{bar.phone}".colorize(:light_magenta)
+            puts "\n"
+        else
+            puts "Sorry! No happy Hour mentions in their reviews, but that doesn't mean they don't have one.".colorize(:light_magenta)
+            if bar.phone != nil
+                puts "Here's the phone number to call and check: #{bar.phone}".colorize(:light_blue)
+                puts "\n"
+        end
     end
 
     def bad_location
@@ -65,8 +66,11 @@ class Cli
     end
 
     def sad_hour
-        puts "------------------------".colorize(:light_magenta)
-        abort("Happy drinking & make good choices!".colorize(:light_magenta))
+        puts "***********************************************".colorize(:light_magenta)
+        puts "*****                                     *****".colorize(:light_magenta)
+        puts "***** Happy drinking & make good choices! *****".colorize(:light_magenta)
+        puts "*****                                     *****".colorize(:light_magenta)
+        puts "***********************************************".colorize(:light_magenta)
     end
 
 end
