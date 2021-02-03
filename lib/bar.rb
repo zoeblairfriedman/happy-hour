@@ -1,5 +1,4 @@
 class Bar 
-# attr_accessor :name, :address, :url, :phone, :price
 attr_accessor :name, :id, :address, :price, :phone, :reviews
 
 @@all = []
