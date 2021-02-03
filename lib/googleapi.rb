@@ -10,13 +10,14 @@ class GoogleApi
 
     def self.make_request(input)
         result = Geocoder.search(input)
-        #convert to 5 decimal points
-        lat = result[0].data["lat"]
-        lon = result[0].data["lon"]
-        round_lat = lat.to_f.round(5).to_s
-        round_lon = lon.to_f.round(5).to_s
-        close_bars_url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=#{round_lat},#{round_lon}&radius=500&types=bar&keyword=happyhour&key=#{API}"
+        lat = result.first.coordinates[0].round(5)
+        lon = result.first.coordinates[1].round(5)
+        close_bars_url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=#{lat},#{lon}&radius=500&types=bar&keyword=happyhour&key=#{API}"
         bars = HTTParty.get(close_bars_url)["results"]
+        if bars.length < 5
+            far_bars_url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=#{lat},#{lon}&radius=10000&types=bar&keyword=happyhour&key=#{API}"
+            bars = HTTParty.get(far_bars_url)["results"]
+        end
         self.create_bar_hash_from_search(bars)
     end
     
