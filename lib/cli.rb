@@ -33,7 +33,6 @@ class Cli
             bar = Bar.all[input-1]
             get_reviews(bar)
             check_again?
-            end
         end
     end
 
@@ -47,6 +46,7 @@ class Cli
         if GoogleApi.load_reviews(bar).length != 0
             puts "\n"
             puts "Here are all the reviews for #{bar.name} that mention the happy hour: ".colorize(:light_magenta)
+            #can I colorize the words "happy hour" in the reviews?
             GoogleApi.load_reviews(bar).each {|review| print review.colorize(:light_blue) }
             puts "\n"
             puts "Here's the phone number if you want to follow up on prices and times: #{bar.phone}".colorize(:light_magenta)
@@ -56,6 +56,7 @@ class Cli
             if bar.phone != nil
                 puts "Here's the phone number to call and check: #{bar.phone}".colorize(:light_blue)
                 puts "\n"
+            end
         end
     end
 
