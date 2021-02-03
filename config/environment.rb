@@ -4,6 +4,7 @@ require 'httparty'
 require "open-uri"
 require 'awesome_print'
 require 'geocoder'
+require 'colorize'
 
 
 #take a relative path for these things:

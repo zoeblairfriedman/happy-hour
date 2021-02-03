@@ -10,5 +10,6 @@ gem 'pry'
 gem 'httparty'
 gem 'awesome_print'
 gem 'geocoder'
+gem 'colorize', '~> 0.8.1'
 
 #any gems you add also need to be required by your environment

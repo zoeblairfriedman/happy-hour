@@ -10,6 +10,9 @@ class GoogleApi
 
     def self.make_request(input)
         result = Geocoder.search(input)
+        if result.length == 0 
+         return nil
+    end
         lat = result.first.coordinates[0].round(5)
         lon = result.first.coordinates[1].round(5)
         close_bars_url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=#{lat},#{lon}&radius=500&types=bar&keyword=happyhour&key=#{API}"
@@ -28,13 +31,13 @@ class GoogleApi
                 name: bar["name"], 
                 id: bar["place_id"],
                 address: bar["vicinity"],
-                price: bar["price_level"]
+                price: Array.new(bar["price_level"].to_i, "$").join("")
             }
         Bar.new(bar_hash)
         end
     end
   
-    def self.check_for_reviews(bar)
+    def self.load_reviews(bar)
        url = "https://maps.googleapis.com/maps/api/place/details/json?place_id=#{bar.id}&fields=name,rating,review,formatted_phone_number&key=#{API}"
        details = HTTParty.get(url)
        bar.phone = details["result"]["formatted_phone_number"]
