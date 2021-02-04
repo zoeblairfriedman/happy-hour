@@ -82,7 +82,7 @@ class Cli
         else
             puts "Sorry! No happy Hour mentions in their reviews, but that doesn't mean they don't have one.".colorize(:light_magenta)
             if bar.phone != nil
-                puts "Here's the phone number to call and check: #{bar.phone}".colorize(:light_magenta)
+                puts "Here's the phone number to call and check:".colorize(:light_magenta)
                 puts "#{bar.phone}".colorize(:light_blue)
                 puts "\n"
             end

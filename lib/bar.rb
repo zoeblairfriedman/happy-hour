@@ -1,10 +1,11 @@
 class Bar 
-attr_accessor :name, :id, :address, :price, :phone, :reviews
+attr_accessor :phone, :reviews
 
 @@all = []
 
 def initialize(bar_hash)
     bar_hash.each do |key, value|
+        self.class.attr_accessor(key)
         self.send("#{key}=", value)
     end
     @@all << self
