@@ -4,6 +4,7 @@ require "open-uri"
 require 'awesome_print'
 require 'geocoder'
 require 'colorize'
+require 'tty-prompt'
 # require 'dotenv-rails'
 
 

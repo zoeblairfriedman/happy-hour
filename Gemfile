@@ -10,3 +10,4 @@ gem 'httparty'
 gem 'awesome_print'
 gem 'geocoder'
 gem 'colorize', '~> 0.8.1'
+gem "tty-prompt"

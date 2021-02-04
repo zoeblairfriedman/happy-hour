@@ -63,8 +63,8 @@ class Cli
     end
 
     def check_again?
-        puts "Would you like to check one of the other bars? Yes or No?"
-        input = gets.chomp
+        prompt = TTY::Prompt.new
+        input = prompt.select("Would you like to check one of the other bars?", %w(Yes No))
         input == "No" ? sad_hour : prompt_for_bar_selection
     end
 
@@ -87,9 +87,9 @@ class Cli
     end
 
     def bad_location
-        puts "Sorry, there are no results for your location. Please 'try again' or 'exit'." 
-        input = gets.chomp
-        input == "exit" ? sad_hour : prompt_for_location
+        prompt = TTY::Prompt.new
+        input = prompt.select("Sorry, there are no results for your location. Try again?", %w(Yes No))
+        input == "No" ? sad_hour : prompt_for_location
     end
 
     def sad_hour
