@@ -5,7 +5,6 @@ require 'awesome_print'
 require 'geocoder'
 require 'colorize'
 require 'tty-prompt'
-# require 'dotenv-rails'
 
 
 require_relative ("../lib/cli")

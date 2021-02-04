@@ -39,7 +39,8 @@ class Cli
 
     def prompt_for_location
         #would love random prompts so they change
-        puts "Where are we drinking???".colorize(:light_magenta)
+        puts "                   *****  Where are we drinking???  *****".colorize(:light_magenta)
+        puts "\n"
         puts "Please enter a street address or neighborhood:"
         input = gets.chomp
         GoogleApi.make_request(input) ? prompt_for_bar_selection : bad_location
@@ -50,7 +51,7 @@ class Cli
            bad_location
         else
             puts "\n"
-            puts "Any of these sound good?".colorize(:light_magenta)
+            puts "*****  Any of these sound good?  *****".colorize(:light_magenta)
             puts "\n"
             Bar.all.each_with_index { |bar, i| puts "#{i+1} #{bar.name}, #{bar.address.colorize(:blue)} #{bar.price.colorize(:green)}" }
             puts "\n"
@@ -75,12 +76,14 @@ class Cli
             #can I colorize the words "happy hour" in the reviews? and can they be on separate lines?
             GoogleApi.load_reviews(bar).each {|review| print review.colorize(:light_blue) }
             puts "\n"
-            puts "Here's the phone number if you want to follow up on prices and times: #{bar.phone}".colorize(:light_magenta)
+            puts "Here's the phone number if you want to follow up on prices and times:".colorize(:light_magenta)
+            puts "#{bar.phone}".colorize(:light_blue)
             puts "\n"
         else
             puts "Sorry! No happy Hour mentions in their reviews, but that doesn't mean they don't have one.".colorize(:light_magenta)
             if bar.phone != nil
-                puts "Here's the phone number to call and check: #{bar.phone}".colorize(:light_blue)
+                puts "Here's the phone number to call and check: #{bar.phone}".colorize(:light_magenta)
+                puts "#{bar.phone}".colorize(:light_blue)
                 puts "\n"
             end
         end
@@ -88,8 +91,8 @@ class Cli
 
     def bad_location
         prompt = TTY::Prompt.new
-        input = prompt.select("Sorry, there are no results for your location. Try again?", %w(Yes No))
-        input == "No" ? sad_hour : prompt_for_location
+        input = prompt.select("Sorry, there are no results for your location.", %w(Try\ Again? Exit))
+        input == "Exit" ? sad_hour : prompt_for_location
     end
 
     def sad_hour
