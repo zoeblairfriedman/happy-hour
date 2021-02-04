@@ -93,3 +93,7 @@ Would you like to check one of the other bars? No
 Thanks to the Flatiron School & Cohort Leader, Annabell Wilmerding, for her patient guidance throughout this process. 
 Thanks to Nick Spangler for his excellent advice.
 Thanks also to James, Jinook, and Eva for their support and assistance. 
+
+
+# LICENSE
+The gem is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
