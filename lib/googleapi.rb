@@ -17,15 +17,15 @@ class GoogleApi
         lon = result.first.coordinates[1].round(5)
         close_bars_url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=#{lat},#{lon}&radius=500&types=bar&keyword=happyhour&key=#{API}"
         bars = HTTParty.get(close_bars_url)["results"]
-        if bars.length < 5
+        if bars.length < 3
             far_bars_url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=#{lat},#{lon}&radius=10000&types=bar&keyword=happyhour&key=#{API}"
             bars = HTTParty.get(far_bars_url)["results"]
         end
-        self.create_bar_hash_from_search(bars)
+        self.create_bars(bars)
     end
     
 
-    def self.create_bar_hash_from_search(bars)
+    def self.create_bars(bars)
         bars.each do |bar|
             bar_hash = {
                 name: bar["name"], 

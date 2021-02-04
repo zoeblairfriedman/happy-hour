@@ -2,12 +2,38 @@ class Cli
   
     def welcome
         puts "\n"
-        puts "***********************************************".colorize(:light_magenta)
-        puts "*****                                     *****".colorize(:light_magenta)
-        puts "*****      IT'S HAPPY HOUR SOMEWHERE!!    *****".colorize(:light_magenta)
-        puts "*****                                     *****".colorize(:light_magenta)
-        puts "***********************************************".colorize(:light_magenta)
+        puts "              *****      IT'S HAPPY HOUR SOMEWHERE!!    *****".colorize(:light_magenta)
+
         puts "\n"
+                                                                                        
+                                                                                
+        puts"                                                    @#        "          
+        puts"                                                    @          "          
+        puts"                                                    *@@&@       "               
+        puts"                                                  @@@@@@@@       "              
+        puts"                                                  @@@@@@@@        "             
+        puts"                                                   *&@@*           "            
+        puts"                                              /@@@@@                "           
+        puts"                                               @@@@@                 "          
+        puts"                  @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@.           "         
+        puts"                    @@@@@                    @     @@@@@               "        
+        puts"                      /@@@@@&               @   @@@@@@                  "       
+        puts"                         @@@@@@@@@@@@@@@@@@@@@@@@@@@                     "      
+        puts"                           @@@@@@@@@@@@@@@@@@@@@@@                        "     
+        puts"                             @@@@@@@@@@@@@@@@@@@               "                
+        puts"                               @@@@@@@@@@@@@@@                  "               
+        puts"                                 #@@@@@@@@@@                     "              
+        puts"                                    @@@@@%                        "             
+        puts"                                     @@@                           "            
+        puts"                                     @@@                            "           
+        puts"                                     @@@                             "          
+        puts"                                     @@@                              "         
+        puts"                                     @@@                               "        
+        puts"                                     @@@                                "       
+        puts"                                     @@@                                 "      
+        puts"                                     @@@                                  "     
+        puts"                                     @@@                                   "    
+        puts"                            /@@@@@@@@@@@@@@@@@@@.                           "   
         self.prompt_for_location
     end
 
@@ -46,7 +72,7 @@ class Cli
         if GoogleApi.load_reviews(bar).length != 0
             puts "\n"
             puts "Here are all the reviews for #{bar.name} that mention the happy hour: ".colorize(:light_magenta)
-            #can I colorize the words "happy hour" in the reviews?
+            #can I colorize the words "happy hour" in the reviews? and can they be on separate lines?
             GoogleApi.load_reviews(bar).each {|review| print review.colorize(:light_blue) }
             puts "\n"
             puts "Here's the phone number if you want to follow up on prices and times: #{bar.phone}".colorize(:light_magenta)
