@@ -21,17 +21,18 @@ class GoogleApi
             far_bars_url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=#{lat},#{lon}&radius=10000&types=bar&keyword=happyhour&key=#{API}"
             bars = HTTParty.get(far_bars_url)["results"]
         end
-        self.create_bars(bars)
+        self.create_bars(bars, input)
     end
     
 
-    def self.create_bars(bars)
+    def self.create_bars(bars, input)
         bars.each do |bar|
             bar_hash = {
                 name: bar["name"], 
                 id: bar["place_id"],
                 address: bar["vicinity"],
-                price: Array.new(bar["price_level"].to_i, "$").join("")
+                price: Array.new(bar["price_level"].to_i, "$").join(""),
+                neighborhood: input
             }
         Bar.new(bar_hash)
         end

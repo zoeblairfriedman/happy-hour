@@ -25,4 +25,8 @@ def self.happy_hour_reviews(bar)
     review_array
 end
 
+def self.find_by_neighborhood(input)
+    Bar.all.select {|bar| bar.neighborhood == input}
+end
+
 end
