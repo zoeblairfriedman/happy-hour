@@ -28,20 +28,16 @@ class Cli
         puts"                                     @@@                                 "      
         puts"                                     @@@                                  "     
         puts"                                     @@@                                   "    
-        puts"                            /@@@@@@@@@@@@@@@@@@@.                           "   
+        puts"                            /@@@@@@@@@@@@@@@@@@@.                           " 
         self.prompt_for_location
     end
 
     def prompt_for_location
-        #would love random prompts so they change
         puts "                   *****  Where are we drinking???  *****".colorize(:light_magenta)
         puts "\nPlease enter a street address or neighborhood:"
         input = gets.chomp
-        if GoogleApi.make_request(input) == [] 
-            bad_location
-        else
-            prompt_for_bar_selection(input)
-        end
+        search = GoogleApi.make_request(input)
+        search == [] ? bad_location : prompt_for_bar_selection(input)
     end
 
     def prompt_for_bar_selection(input)
@@ -49,11 +45,11 @@ class Cli
            bad_location
         else
             puts "\n*****  Any of these sound good around #{input}?  *****\n".colorize(:light_magenta)
-            bar_array = Bar.find_by_neighborhood(input)
-            bar_array.each_with_index { |bar, i| puts "#{i+1} #{bar.name}, #{bar.address.colorize(:blue)} #{bar.price.colorize(:green)}" }
+            local_bars = Bar.find_by_neighborhood(input)
+            local_bars.each_with_index { |bar, i| puts "#{i+1} #{bar.name}, #{bar.address.colorize(:blue)} #{bar.price.colorize(:green)}" }
             puts "\nPlease enter a number:"
             input = gets.chomp.to_i
-            bar = bar_array[input-1]
+            bar = local_bars[input-1]
             get_reviews(bar)
             check_again?(bar.neighborhood)
         end
@@ -61,9 +57,8 @@ class Cli
 
     def check_again?(location)
         prompt = TTY::Prompt.new
-        input = prompt.select("Would you like to check one of the other bars?", %w(Yes No))
-        puts "\n"
-        input == "No" ? sad_hour : prompt_for_bar_selection(location)
+        input = prompt.select("Would you like to check one of the other bars?\n", %w(Yes No))
+        input == "No" ? sad_hour_revisit : prompt_for_bar_selection(location)
     end
 
     def get_reviews(bar)
@@ -80,14 +75,20 @@ class Cli
 
     def bad_location
         prompt = TTY::Prompt.new
-        puts "\n"
-        input = prompt.select("Sorry, there are no results for your location.\n", %w(Try\ Again? Revisit\ Search? Exit))
-        if input == "Exit" 
-            sad_hour
-        elsif input == "Try Again?"
-            prompt_for_location
+        puts "\nSorry, there are no results for your location.\n"
+        if Bar.all.length == 0
+            input = prompt.select("\n", %w(Try\ Again? Exit))
+            input == "Try Again?" ? prompt_for_location : farewell
         else
-            previous_search
+            #give them a revisit search optoin
+            input = prompt.select("\n", %w(Try\ Again? Revisit\ Search? Exit))
+            if input == "Try Again?"
+                prompt_for_location
+            elsif input == "Revisit Search?"
+                previous_search
+            else
+                farewell
+            end
         end
     end
 
@@ -98,21 +99,35 @@ class Cli
         end
     end
 
-    def sad_hour
+    def sad_hour_leave
         prompt = TTY::Prompt.new
-        input = prompt.select("What would you like to do now?", %w(New\ Search? Revisit\ Search? Exit))
+        input = prompt.select("What would you like to do now?", %w(New\ Search? Exit))
         puts "\n"
+        if input == "Exit\n"
+            farewell
+        else
+            prompt_for_location
+        end
+    end
+
+    def sad_hour_revisit
+        prompt = TTY::Prompt.new
+        input = prompt.select("What would you like to do now?\n", %w(New\ Search? Revisit\ Search? Exit))
         if input == "Revisit Search?"
             previous_search
         elsif input == "New Search?"
             prompt_for_location
         else
-            puts "***********************************************".colorize(:light_magenta)
-            puts "*****                                     *****".colorize(:light_magenta)
-            puts "***** Happy drinking & make good choices! *****".colorize(:light_magenta)
-            puts "*****                                     *****".colorize(:light_magenta)
-            puts "***********************************************\n".colorize(:light_magenta)
+            farewell
         end
+    end
+
+    def farewell
+        puts "***********************************************".colorize(:light_magenta)
+        puts "*****                                     *****".colorize(:light_magenta)
+        puts "***** Happy drinking & make good choices! *****".colorize(:light_magenta)
+        puts "*****                                     *****".colorize(:light_magenta)
+        puts "***********************************************\n".colorize(:light_magenta)
     end
 
     def previous_search

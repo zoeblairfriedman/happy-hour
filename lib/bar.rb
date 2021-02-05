@@ -1,5 +1,5 @@
 class Bar 
-attr_accessor :phone, :reviews
+attr_accessor :reviews, :phone
 
 @@all = []
 
