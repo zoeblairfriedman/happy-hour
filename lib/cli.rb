@@ -1,11 +1,7 @@
 class Cli
   
     def welcome
-        puts "\n            *****      IT'S HAPPY HOUR SOMEWHERE!!    *****".colorize(:light_magenta)
-
-        puts "\n"
-                                                                                        
-                                                                                
+        puts "\n            *****      IT'S HAPPY HOUR SOMEWHERE!!    *****\n".colorize(:light_magenta)                                                                 
         puts"                                                    @#        "          
         puts"                                                    @          "          
         puts"                                                    *@@&@       "               
@@ -52,8 +48,7 @@ class Cli
         if Bar.all.length == 0
            bad_location
         else
-            puts "\n*****  Any of these sound good around #{input}?  *****".colorize(:light_magenta)
-            puts "\n"
+            puts "\n*****  Any of these sound good around #{input}?  *****\n".colorize(:light_magenta)
             bar_array = Bar.find_by_neighborhood(input)
             bar_array.each_with_index { |bar, i| puts "#{i+1} #{bar.name}, #{bar.address.colorize(:blue)} #{bar.price.colorize(:green)}" }
             puts "\nPlease enter a number:"
