@@ -1,8 +1,7 @@
 class Cli
   
     def welcome
-        puts "\n"
-        puts "              *****      IT'S HAPPY HOUR SOMEWHERE!!    *****".colorize(:light_magenta)
+        puts "\n            *****      IT'S HAPPY HOUR SOMEWHERE!!    *****".colorize(:light_magenta)
 
         puts "\n"
                                                                                         
@@ -40,8 +39,7 @@ class Cli
     def prompt_for_location
         #would love random prompts so they change
         puts "                   *****  Where are we drinking???  *****".colorize(:light_magenta)
-        puts "\n"
-        puts "Please enter a street address or neighborhood:"
+        puts "\nPlease enter a street address or neighborhood:"
         input = gets.chomp
         if GoogleApi.make_request(input) == [] 
             bad_location
@@ -54,13 +52,11 @@ class Cli
         if Bar.all.length == 0
            bad_location
         else
-            puts "\n"
-            puts "*****  Any of these sound good around #{input}?  *****".colorize(:light_magenta)
+            puts "\n*****  Any of these sound good around #{input}?  *****".colorize(:light_magenta)
             puts "\n"
             bar_array = Bar.find_by_neighborhood(input)
             bar_array.each_with_index { |bar, i| puts "#{i+1} #{bar.name}, #{bar.address.colorize(:blue)} #{bar.price.colorize(:green)}" }
-            puts "\n"
-            puts "Please enter a number:"
+            puts "\nPlease enter a number:"
             input = gets.chomp.to_i
             bar = bar_array[input-1]
             get_reviews(bar)
@@ -77,15 +73,12 @@ class Cli
 
     def get_reviews(bar)
         if GoogleApi.load_reviews(bar).length != 0
-            puts "\n"
-            puts "Here are all the reviews for #{bar.name} that mention the happy hour: ".colorize(:light_magenta)
-            puts "\n"
+            puts "\nHere are all the reviews for #{bar.name} that mention the happy hour: \n".colorize(:light_magenta)
             #can I colorize the words "happy hour" in the reviews? and can they be on separate lines?
-            GoogleApi.load_reviews(bar).each {|review| puts review.colorize(:light_blue) + "\n" + "\n" }
+            GoogleApi.load_reviews(bar).each {|review| puts review.colorize(:light_blue) + "\n"}
             phone_number(bar)
         else
-            puts "\n"
-            puts "Sorry! No happy Hour mentions in their reviews, but that doesn't mean they don't have one.".colorize(:light_magenta)
+            puts "\nSorry! No happy Hour mentions in their reviews, but that doesn't mean they don't have one.".colorize(:light_magenta)
             phone_number(bar)
         end
     end
@@ -93,7 +86,7 @@ class Cli
     def bad_location
         prompt = TTY::Prompt.new
         puts "\n"
-        input = prompt.select("Sorry, there are no results for your location.", %w(Try\ Again? Revisit\ Search? Exit))
+        input = prompt.select("Sorry, there are no results for your location.\n", %w(Try\ Again? Revisit\ Search? Exit))
         if input == "Exit" 
             sad_hour
         elsif input == "Try Again?"
@@ -106,8 +99,7 @@ class Cli
     def phone_number(bar)
         if bar.phone != nil
             puts "Here's the phone number if you want to follow up on prices and times:".colorize(:light_magenta)
-            puts "#{bar.phone}".colorize(:light_blue)
-            puts "\n"
+            puts "#{bar.phone}\n".colorize(:light_blue)
         end
     end
 
@@ -124,7 +116,7 @@ class Cli
             puts "*****                                     *****".colorize(:light_magenta)
             puts "***** Happy drinking & make good choices! *****".colorize(:light_magenta)
             puts "*****                                     *****".colorize(:light_magenta)
-            puts "***********************************************".colorize(:light_magenta)
+            puts "***********************************************\n".colorize(:light_magenta)
         end
     end
 
@@ -139,12 +131,9 @@ class Cli
             bar_array = Bar.find_by_neighborhood(choices[0])
             revisit(choices[0], bar_array)
         else 
-            puts "Which neighborhood would you like to revisit?".colorize(:light_magenta)
-            puts "\n"
+            puts "Which neighborhood would you like to revisit?\n".colorize(:light_magenta)
             choices.each_with_index {|place, i| puts "#{i+1}. #{place.colorize(:blue).underline}"} 
-            puts "\n"
-            puts "Please enter a number:"
-            puts "\n"
+            puts "\nPlease enter a number:\n"
             input = gets.chomp.to_i
             bar_array = Bar.find_by_neighborhood(choices[input - 1])
             revisit(choices[input - 1], bar_array)
@@ -152,12 +141,9 @@ class Cli
     end
 
     def revisit(input, bar_array)
-        "\n"
-        puts "Here, again, are the bars near #{input}:".colorize(:light_magenta)
-        puts "\n"
-        bar_array.each_with_index { |bar, i| puts "#{i+1} #{bar.name}, #{bar.address.colorize(:blue)} #{bar.price.colorize(:green)}" }
-        puts "\n"
-        puts "Please enter a number:"
+        puts "\nHere, again, are the bars near #{input}:\n".colorize(:light_magenta)
+        bar_array.each_with_index { |bar, i| puts "#{i+1} #{bar.name}, #{bar.address.colorize(:blue)} #{bar.price.colorize(:green)}\n" }
+        puts "\nPlease enter a number:"
         input = gets.chomp.to_i
         bar = Bar.all[input-1]
         get_reviews(bar)
