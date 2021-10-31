@@ -5,7 +5,7 @@ require_relative ("../lib/bar")
 class GoogleApi 
 
 
-    API = "AIzaSyAaSwC5MoX0vLziJApwVjWZYHxmsdz077Y"
+    API = "APIKEYHERE"
 
 
     def self.make_request(input)
